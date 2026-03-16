@@ -36,6 +36,12 @@ while game_is_on: # Inicia o loop principal do jogo
 
     # Condição de saída manual
     if answer_state == "Exit": # Se o usuário digitar 'Exit'
+        missing_states = []
+        for state in all_states:
+            if state not in guessed_states:
+                missing_states.append(state)
+        new_data = pandas.DataFrame(missing_states)
+        new_data.to_csv("states_to_learn.csv")
         game_is_on = False # Altera a variável para encerrar o loop
         print("Você encerrou o jogo") # Imprime mensagem de encerramento no console
 
