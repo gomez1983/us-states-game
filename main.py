@@ -34,15 +34,15 @@ while game_is_on: # Inicia o loop principal do jogo
     answer_state = screen.textinput(title=f"{len(guessed_states)}/50 States Correct", 
                                     prompt="What's another state's name?").title()
 
-    # Condição de saída manual
+    # Condição de saída manual e geração de arquivo de estudo
     if answer_state == "Exit": # Se o usuário digitar 'Exit'
-        missing_states = []
-        for state in all_states:
-            if state not in guessed_states:
-                missing_states.append(state)
-        new_data = pandas.DataFrame(missing_states)
-        new_data.to_csv("states_to_learn.csv")
-        game_is_on = False # Altera a variável para encerrar o loop
+        # Cria uma lista com os estados de 'all_states' que NÃO estão em 'guessed_states'
+        missing_states = [state for state in all_states if state not in guessed_states] 
+        
+        new_data = pandas.DataFrame(missing_states) # Cria um novo DataFrame a partir da lista de estados faltantes
+        new_data.to_csv("states_to_learn.csv") # Salva o DataFrame em um arquivo CSV para estudo posterior
+        
+        game_is_on = False # Altera a variável para encerrar o loop do jogo
         print("Você encerrou o jogo") # Imprime mensagem de encerramento no console
 
     # Validação da resposta e lógica de escrita
